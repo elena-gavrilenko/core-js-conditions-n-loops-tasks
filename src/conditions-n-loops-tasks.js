@@ -249,8 +249,14 @@ function getIndexOf(str, letter) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  const str = String(num);
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === String(digit)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -266,10 +272,22 @@ function isContainNumber(/* num, digit */) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
-}
+function getBalanceIndex(arr) {
+  function sumNumber(array, indexStart, indexEnd) {
+    let sum = 0;
+    for (let i = indexStart; i <= indexEnd; i += 1) {
+      sum += array[i];
+    }
+    return sum;
+  }
 
+  for (let i = 1; i < arr.length - 1; i += 1) {
+    if (sumNumber(arr, 0, i - 1) === sumNumber(arr, i + 1, arr.length - 1)) {
+      return i;
+    }
+  }
+  return -1;
+}
 /**
  * Generates a spiral matrix of a given size, filled with numbers in ascending order starting from one.
  * The direction of filling with numbers is clockwise.
