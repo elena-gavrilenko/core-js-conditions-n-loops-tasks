@@ -309,8 +309,18 @@ function getBalanceIndex(arr) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const arr = [];
+  let k = 1;
+  for (let i = 0; i < size; i += 1) {
+    arr[i] = [];
+
+    for (let j = 0; j < size; j += 1) {
+      arr[i][j] = k;
+      k += 1;
+    }
+  }
+  return arr;
 }
 
 /**
@@ -346,8 +356,26 @@ function rotateMatrix(/* matrix */) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const arrNew = arr;
+  function compareFunction(a, b) {
+    return a - b;
+  }
+
+  for (let i = 0; i < arrNew.length - 1; i += 1) {
+    for (let j = 0; j < arrNew.length - i - 1; j += 1) {
+      if (
+        compareFunction
+          ? compareFunction(arrNew[j], arrNew[j + 1]) > 0
+          : arrNew[j] > arrNew[j + 1]
+      ) {
+        const temp = arrNew[j];
+        arrNew[j] = arrNew[j + 1];
+        arrNew[j + 1] = temp;
+      }
+    }
+  }
+  return arr;
 }
 
 /**
