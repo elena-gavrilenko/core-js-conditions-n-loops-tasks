@@ -111,37 +111,42 @@ function isIsoscelesTriangle(a, b, c) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  // const numbers = {
-  //   1: 'I',
-  //   4: 'IV',
-  //   5: 'V',
-  //   9: 'IX',
-  //   10: 'X',
-  // };
-  // let numberRomT;
-  // const forSingleDigit = (a) => {
-  //   let numberRom;
-  //   if (numbers[a]) {
-  //     return numbers[a];
-  //   }
-  //   if (a < 4) {
-  //     numberRom = numbers[1].repeat(a);
-  //   } else {
-  //     numberRom = numbers[5] + numbers[1].repeat(a - 5);
-  //   }
-  //   return numberRom;
-  // };
-  // if (num <= 10) {
-  //   numberRomT = forSingleDigit(num);
-  // } else {
-  //   const numT = numbers[10].repeat(Math.floor(num / 10));
-  //   const numU = num % 10;
-  //   numberRomT = numT + forSingleDigit(numU);
-  // }
-  // console.log(num);
-  // console.log(numberRomT);
-  // return numberRomT;
+function convertToRomanNumerals(num) {
+  const numbers = {
+    1: 'I',
+    4: 'IV',
+    5: 'V',
+    9: 'IX',
+    10: 'X',
+  };
+  function repeatStr(str, count) {
+    let rpt = '';
+    for (let i = 0; i < count; i += 1) {
+      rpt += str;
+    }
+    return rpt;
+  }
+  let numberRomT;
+  const forSingleDigit = (a) => {
+    let numberRom;
+    if (numbers[a]) {
+      return numbers[a];
+    }
+    if (a < 4) {
+      numberRom = repeatStr(numbers[1], a);
+    } else {
+      numberRom = numbers[5] + repeatStr(numbers[1], a - 5);
+    }
+    return numberRom;
+  };
+  if (num <= 10) {
+    numberRomT = forSingleDigit(num);
+  } else {
+    const numT = repeatStr(numbers[10], Math.floor(num / 10));
+    const numU = num % 10;
+    numberRomT = numT + forSingleDigit(numU);
+  }
+  return numberRomT;
 }
 
 /**
@@ -159,8 +164,31 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  const numbers = {
+    0: 'zero',
+    1: 'one',
+    2: 'two',
+    3: 'three',
+    4: 'four',
+    5: 'five',
+    6: 'six',
+    7: 'seven',
+    8: 'eight',
+    9: 'nine',
+    '.': 'point',
+    ',': 'point',
+    '-': 'minus',
+  };
+  let newStr = '';
+  for (let i = 0; i < numberStr.length; i += 1) {
+    if (i > 0) {
+      newStr += ` ${numbers[numberStr[i]]}`;
+    } else {
+      newStr += numbers[numberStr[i]];
+    }
+  }
+  return newStr;
 }
 
 /**
@@ -175,8 +203,13 @@ function convertNumberToString(/* numberStr */) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  for (let i = 0; i < str.length / 2; i += 1) {
+    if (str[i] !== str[str.length - 1 - i]) {
+      return false;
+    }
+  }
+  return true;
 }
 
 /**
@@ -193,10 +226,14 @@ function isPalindrome(/* str */) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) {
+      return i;
+    }
+  }
+  return -1;
 }
-
 /**
  * Checks if a number contains a specific digit.
  * In this task, the use of methods of the String and Array classes is not allowed.
