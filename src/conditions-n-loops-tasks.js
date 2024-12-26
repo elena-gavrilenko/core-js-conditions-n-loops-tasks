@@ -66,8 +66,12 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  return (
+    queen.x === king.x ||
+    queen.y === king.y ||
+    Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)
+  );
 }
 
 /**
@@ -446,7 +450,9 @@ function getNearestBigger(number) {
   if (str[l - 2] < str[l - 1])
     nearestBigger = str.slice(0, -2) + sorted(2, str.slice(-2));
   else if (str[l - 1] === str[l - 2] || str[l - 2] > str[l - 1]) {
-    nearestBigger = str.split('').sort();
+    const secondPart = str.slice(-3).split('').sort();
+    nearestBigger =
+      str.slice(0, -3) + secondPart[2] + secondPart.slice(0, 2).join('');
   }
 
   return Number(nearestBigger);
