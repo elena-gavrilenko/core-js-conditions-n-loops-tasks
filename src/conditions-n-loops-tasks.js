@@ -169,27 +169,86 @@ function convertToRomanNumerals(num) {
  *  '1950.2'  => 'one nine five zero point two'
  */
 function convertNumberToString(numberStr) {
-  const numbers = {
-    0: 'zero',
-    1: 'one',
-    2: 'two',
-    3: 'three',
-    4: 'four',
-    5: 'five',
-    6: 'six',
-    7: 'seven',
-    8: 'eight',
-    9: 'nine',
-    '.': 'point',
-    ',': 'point',
-    '-': 'minus',
-  };
   let newStr = '';
   for (let i = 0; i < numberStr.length; i += 1) {
-    if (i > 0) {
-      newStr += ` ${numbers[numberStr[i]]}`;
+    if (i < numberStr.length - 1) {
+      switch (numberStr[i]) {
+        case '0':
+          newStr += 'zero ';
+          break;
+        case '1':
+          newStr += 'one ';
+          break;
+        case '2':
+          newStr += 'two ';
+          break;
+        case '3':
+          newStr += 'three ';
+          break;
+        case '4':
+          newStr += 'four ';
+          break;
+        case '5':
+          newStr += 'five ';
+          break;
+        case '6':
+          newStr += 'six ';
+          break;
+        case '7':
+          newStr += 'seven ';
+          break;
+        case '8':
+          newStr += 'eight ';
+          break;
+        case '9':
+          newStr += 'nine ';
+          break;
+        case '-':
+          newStr += 'minus ';
+          break;
+        default:
+          newStr += 'point ';
+          break;
+      }
     } else {
-      newStr += numbers[numberStr[i]];
+      switch (numberStr[i]) {
+        case '0':
+          newStr += 'zero';
+          break;
+        case '1':
+          newStr += 'one';
+          break;
+        case '2':
+          newStr += 'two';
+          break;
+        case '3':
+          newStr += 'three';
+          break;
+        case '4':
+          newStr += 'four ';
+          break;
+        case '5':
+          newStr += 'five';
+          break;
+        case '6':
+          newStr += 'six';
+          break;
+        case '7':
+          newStr += 'seven';
+          break;
+        case '8':
+          newStr += 'eight';
+          break;
+        case '9':
+          newStr += 'nine';
+          break;
+        case '-':
+          newStr += 'minus';
+          break;
+        default:
+          newStr += 'point';
+          break;
+      }
     }
   }
   return newStr;
