@@ -434,7 +434,6 @@ function shuffleChar(str, iterations) {
  * @returns {number} The nearest larger number, or original number if none exists.
  */
 function getNearestBigger(number) {
-  console.log(number);
   function sorted(n, str) {
     let newStr;
     if (n === 2) newStr = str[1] + str[0];
@@ -449,7 +448,7 @@ function getNearestBigger(number) {
   else if (str[l - 1] === str[l - 2] || str[l - 2] > str[l - 1]) {
     nearestBigger = str.split('').sort();
   }
-  console.log(nearestBigger);
+
   return Number(nearestBigger);
 }
 
