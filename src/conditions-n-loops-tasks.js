@@ -402,7 +402,6 @@ function getSpiralMatrix(size) {
  *  ]                 ]
  */
 function rotateMatrix(matrix) {
-  console.log(matrix);
   const m = [];
   const l = matrix.length;
 
@@ -412,7 +411,7 @@ function rotateMatrix(matrix) {
       m[i][j] = matrix[l - 1 - j][i];
     }
   }
-  console.log(m);
+
   return m;
 }
 
