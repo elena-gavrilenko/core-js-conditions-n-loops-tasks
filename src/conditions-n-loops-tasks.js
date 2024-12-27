@@ -401,18 +401,28 @@ function getSpiralMatrix(size) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(matrix) {
-  const m = [];
-  const l = matrix.length;
+function rotateMatrix(mat) {
+  const matrix = mat;
+  const n = matrix.length;
 
-  for (let i = 0; i < l; i += 1) {
-    m[i] = [];
-    for (let j = 0; j < l; j += 1) {
-      m[i][j] = matrix[l - 1 - j][i];
+  // First transpose the matrix
+  for (let i = 0; i < n; i += 1) {
+    for (let j = i; j < n; j += 1) {
+      [matrix[i][j], matrix[j][i]] = [matrix[j][i], matrix[i][j]];
     }
   }
 
-  return m;
+  // Then reverse each row
+  for (let i = 0; i < n; i += 1) {
+    for (let j = 0; j < n / 2; j += 1) {
+      [matrix[i][j], matrix[i][n - 1 - j]] = [
+        matrix[i][n - 1 - j],
+        matrix[i][j],
+      ];
+    }
+  }
+
+  return matrix;
 }
 
 /**
@@ -506,25 +516,86 @@ function shuffleChar(str, iterations) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(number) {
-  function sorted(n, str) {
-    let newStr;
-    if (n === 2) newStr = str[1] + str[0];
-    else newStr = str.split('').sort()[n - 1] + str.slice(0, -1);
-    return newStr;
-  }
-  const str = String(number);
-  const l = str.length;
-  let nearestBigger;
-  if (str[l - 2] < str[l - 1])
-    nearestBigger = str.slice(0, -2) + sorted(2, str.slice(-2));
-  else if (str[l - 1] === str[l - 2] || str[l - 2] > str[l - 1]) {
-    const secondPart = str.slice(-3).split('').sort();
-    nearestBigger =
-      str.slice(0, -3) + secondPart[2] + secondPart.slice(0, 2).join('');
+function partition(arr, low, high) {
+  const m = arr;
+  const pivot = m[high];
+  let i = low - 1;
+
+  for (let j = low; j < high; j += 1) {
+    if (arr[j] <= pivot) {
+      i += 1;
+      const temp = arr[i];
+      m[i] = arr[j];
+      m[j] = temp;
+    }
   }
 
-  return Number(nearestBigger);
+  const temp = arr[i + 1];
+  m[i + 1] = arr[high];
+  m[high] = temp;
+
+  return i + 1;
+}
+
+function quickSort(arr, low, high) {
+  if (low < high) {
+    const pi = partition(arr, low, high);
+    quickSort(arr, low, pi - 1);
+    quickSort(arr, pi + 1, high);
+  }
+}
+
+function getNearestBigger(num) {
+  // Convert number to array of digits
+  let length = 0;
+  let n = num;
+
+  while (n > 0) {
+    length += 1;
+    n = Math.floor(n / 10);
+  }
+
+  const arr = new Array(length);
+  n = num;
+
+  for (let i = length - 1; i >= 0; i -= 1) {
+    arr[i] = n % 10;
+    n = Math.floor(n / 10);
+  }
+
+  // Find first pair from right where left digit is smaller
+  let i = length - 2;
+
+  while (i >= 0 && arr[i] >= arr[i + 1]) {
+    i -= 1;
+  }
+
+  // If no such pair found, return original number
+  if (i < 0) {
+    return num;
+  }
+
+  // Find smallest digit on right that's bigger than arr[i]
+  let j = length - 1;
+
+  while (arr[i] >= arr[j]) {
+    j -= 1;
+  }
+
+  // Swap the digits using destructuring
+  [arr[i], arr[j]] = [arr[j], arr[i]];
+
+  // Sort right part using quicksort
+  quickSort(arr, i + 1, length - 1);
+
+  // Convert back to number
+  let result = 0;
+
+  for (let k = 0; k < length; k += 1) {
+    result = result * 10 + arr[k];
+  }
+
+  return result;
 }
 
 module.exports = {
