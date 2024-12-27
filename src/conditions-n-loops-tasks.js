@@ -516,6 +516,7 @@ function shuffleChar(str, iterations) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
+
 function partition(arr, low, high) {
   const m = arr;
   const pivot = m[high];
@@ -546,7 +547,6 @@ function quickSort(arr, low, high) {
 }
 
 function getNearestBigger(num) {
-  // Convert number to array of digits
   let length = 0;
   let n = num;
 
@@ -562,35 +562,21 @@ function getNearestBigger(num) {
     arr[i] = n % 10;
     n = Math.floor(n / 10);
   }
-
-  // Find first pair from right where left digit is smaller
   let i = length - 2;
 
   while (i >= 0 && arr[i] >= arr[i + 1]) {
     i -= 1;
   }
-
-  // If no such pair found, return original number
   if (i < 0) {
     return num;
   }
-
-  // Find smallest digit on right that's bigger than arr[i]
   let j = length - 1;
-
   while (arr[i] >= arr[j]) {
     j -= 1;
   }
-
-  // Swap the digits using destructuring
   [arr[i], arr[j]] = [arr[j], arr[i]];
-
-  // Sort right part using quicksort
   quickSort(arr, i + 1, length - 1);
-
-  // Convert back to number
   let result = 0;
-
   for (let k = 0; k < length; k += 1) {
     result = result * 10 + arr[k];
   }
