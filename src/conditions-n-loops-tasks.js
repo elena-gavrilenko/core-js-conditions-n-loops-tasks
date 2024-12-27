@@ -225,7 +225,7 @@ function convertNumberToString(numberStr) {
           newStr += 'three';
           break;
         case '4':
-          newStr += 'four ';
+          newStr += 'four';
           break;
         case '5':
           newStr += 'five';
@@ -373,17 +373,41 @@ function getBalanceIndex(arr) {
  *        ]
  */
 function getSpiralMatrix(size) {
-  const arr = [];
-  let k = 1;
+  const results = [];
   for (let i = 0; i < size; i += 1) {
-    arr[i] = [];
-
-    for (let j = 0; j < size; j += 1) {
-      arr[i][j] = k;
-      k += 1;
-    }
+    results[i] = [];
   }
-  return arr;
+  let counter = 1;
+  let startColumn = 0;
+  let endColumn = size - 1;
+  let startRow = 0;
+  let endRow = size - 1;
+  while (startColumn <= endColumn && startRow <= endRow) {
+    for (let i = startColumn; i <= endColumn; i += 1) {
+      results[startRow][i] = counter;
+      counter += 1;
+    }
+    startRow += 1;
+
+    for (let i = startRow; i <= endRow; i += 1) {
+      results[i][endColumn] = counter;
+      counter += 1;
+    }
+    endColumn -= 1;
+
+    for (let i = endColumn; i >= startColumn; i -= 1) {
+      results[endRow][i] = counter;
+      counter += 1;
+    }
+    endRow -= 1;
+
+    for (let i = endRow; i >= startRow; i -= 1) {
+      results[i][startColumn] = counter;
+      counter += 1;
+    }
+    startColumn += 1;
+  }
+  return results;
 }
 
 /**
