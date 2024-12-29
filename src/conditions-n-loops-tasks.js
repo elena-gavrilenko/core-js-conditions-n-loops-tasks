@@ -462,24 +462,41 @@ function rotateMatrix(mat) {
  */
 function sortByAsc(arr) {
   const arrNew = arr;
-  function compareFunction(a, b) {
-    return a - b;
+
+  // function compareFunction(a, b) {
+  //   return a - b;
+  // }
+
+  // for (let i = 0; i < arrNew.length - 1; i += 1) {
+  //   for (let j = 0; j < arrNew.length - i - 1; j += 1) {
+  //     if (
+  //       compareFunction
+  //         ? compareFunction(arrNew[j], arrNew[j + 1]) > 0
+  //         : arrNew[j] > arrNew[j + 1]
+  //     ) {
+  //       const temp = arrNew[j];
+  //       arrNew[j] = arrNew[j + 1];
+  //       arrNew[j + 1] = temp;
+  //     }
+  //   }
+  // }
+  if (arrNew.length <= 1) {
+    return arrNew;
   }
 
+  const pivot = arrNew[arrNew.length - 1];
+  const leftList = [];
+  const rightList = [];
+
   for (let i = 0; i < arrNew.length - 1; i += 1) {
-    for (let j = 0; j < arrNew.length - i - 1; j += 1) {
-      if (
-        compareFunction
-          ? compareFunction(arrNew[j], arrNew[j + 1]) > 0
-          : arrNew[j] > arrNew[j + 1]
-      ) {
-        const temp = arrNew[j];
-        arrNew[j] = arrNew[j + 1];
-        arrNew[j + 1] = temp;
-      }
+    if (arrNew[i] < pivot) {
+      leftList.push(arrNew[i]);
+    } else {
+      rightList.push(arrNew[i]);
     }
   }
-  return arr;
+
+  return [...sortByAsc(leftList), pivot, ...sortByAsc(rightList)];
 }
 
 /**
