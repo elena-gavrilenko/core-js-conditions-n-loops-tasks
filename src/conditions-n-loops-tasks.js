@@ -501,9 +501,39 @@ function sortByAsc(arr) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
+function foundIterations(str, iterations) {
+  let newString = str;
+  const control = str;
+  let iter = iterations;
+  let count = 1;
+  while (iter > 0) {
+    let strLeft = '';
+    let strRigth = '';
+    for (let i = 0; i < newString.length; i += 1) {
+      if (i % 2 === 0) {
+        strLeft += newString.charAt(i);
+      } else {
+        strRigth += newString.charAt(i);
+      }
+    }
+
+    newString = strLeft + strRigth;
+
+    if (control !== newString) {
+      count += 1;
+      iter -= 1;
+    } else {
+      break;
+    }
+  }
+
+  return count;
+}
 function shuffleChar(str, iterations) {
   let newStr = str;
   let iter = iterations;
+  const count = foundIterations(newStr, iter);
+  iter = iter <= count ? iter : iter - count * Math.floor(iter / count);
   while (iter > 0) {
     let strLeft = '';
     let strRigth = '';
